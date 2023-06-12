@@ -1,5 +1,0 @@
-include LICENSE
-include README.rst
-recursive-include admin_soft/static *
-recursive-include admin_soft/templates *
-recursive-include docs *
