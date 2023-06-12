@@ -35,21 +35,22 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'admin_soft.apps.AdminSoftDashboardConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'crispy_forms',
     'crispy_bootstrap4',
-    'giftweb',
     'accounts',
+    'giftweb',
     'rest_framework',
     'corsheaders',
-    'storages',
-    'ckeditor'
+    'ckeditor',
+    'storages'
+    
 ]
 
 MIDDLEWARE = [
@@ -170,11 +171,6 @@ AUTHENTICATION_BACKENDS = (
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 django_heroku.settings(locals())
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
