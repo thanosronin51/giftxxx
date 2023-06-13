@@ -76,13 +76,13 @@
                     {% endif %}
                     <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
                         <figure class="img-box">
-                            <img src="{{ product.image.url }}" alt="Ore Quantum PWG927.650">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         </figure>
                     </a>
                     <div class="details">
-                        <span class="cat"><i class="uil uil-tag-alt"></i> ${{ product.price }}</span>
+                        <span class="cat"><i class="uil uil-tag-alt"></i> {{ product.name }}</span>
                         <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
-                            <h5 class="title"> {{ product.name }}</h5>
+                            <h5 class="title">Ore {{ product.name }}</h5>
                         </a>
                         <div class="star">
                             <i class="fa-solid fa-star"></i>
