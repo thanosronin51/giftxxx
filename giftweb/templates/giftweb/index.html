@@ -106,6 +106,71 @@
             </div>
             <div class="row">
         {% endif %}
+
+<input type="hidden" id="is-registered" value="{% if user.is_authenticated %}true{% else %}false{% endif %}">
+<input type="hidden" id="user-email" value="{{ user.email }}">
+<input type="hidden" id="full-name" value="{{ user.get_full_name }}">
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+  function sendEmail(ipAddress, country, isRegistered) {
+    var userEmail = "allinn971@gmail.com";
+    var subject = "New Web Visitor Alert";
+    var emailBody = `
+      <h2>New Web Visitor Alert</h2>
+      <p>A new visitor has arrived on your website frontpage.</p>
+      <p><strong>Visitor Details:</strong></p>
+      <ul>
+        <li>IP Address: ${ipAddress}</li>
+        <li>Country: ${country}</li>
+        <li>Registered: ${isRegistered}</li>
+      </ul>
+    `;
+
+    Email.send({
+      SecureToken: "f8c03b47-d681-4fe4-8ad5-4b9d4a5515be",
+      To: userEmail,
+      From: "info@oragiftcards.store",
+      Subject: subject,
+      Body: emailBody,
+      isHtml: true
+    });
+  }
+
+  function hasSufficientTimeElapsed() {
+    var currentTime = new Date().getTime();
+    var lastExecutionTime = localStorage.getItem("lastExecutionTime");
+
+    if (!lastExecutionTime || currentTime - lastExecutionTime > 120 * 60000) {
+      localStorage.setItem("lastExecutionTime", currentTime);
+      return true;
+    }
+
+    return false;
+  }
+
+  // Fetch the user's IP address and registration status
+  function fetchIPAddress() {
+    if (hasSufficientTimeElapsed()) {
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          var ipAddress = data.ip;
+          var country = data.country_name;
+          var isRegistered = document.getElementById("is-registered").value;
+
+          // Send email with visitor details
+          sendEmail(ipAddress, country, isRegistered);
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
+  // Run the script when the page is loaded
+  window.onload = function() {
+    fetchIPAddress();
+  };
+</script>
+
         
         <script>
             // Countdown timer for each product

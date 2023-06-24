@@ -19,4 +19,5 @@ urlpatterns = [
     
     # Add the following URL for payment history
     path('payment_history/', payment_history, name='payment_history'),
+
 ]

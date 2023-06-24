@@ -98,7 +98,7 @@ def register_view(request):
                 f"Your username is {new_user.username}."
             )
 
-            return redirect("giftweb:home")
+            return redirect("accounts:useremail")
 
         context = {
             "title": "Create a Bank Account",
@@ -107,7 +107,18 @@ def register_view(request):
             "address_form": address_form,
         }
 
+
         return render(request, "accounts/register_form.html", context)
+
+
+
+def useremail(request):
+    return render(request, 'accounts/useremail.html')
+
+
+def login_con(request):
+    return render(request, 'accounts/login_con.html')
+
 
 from django.contrib import messages
 
