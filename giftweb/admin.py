@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 from .models import Contactor
+from giftsite.admin_actions import export_as_csv
 
 class ContactAdmin(admin.ModelAdmin):
   list_display = ('id', 'name', 'subject', 'email', 'contact_date')
@@ -24,3 +25,4 @@ admin.site.register(Payment, PaymentAdmin)
 admin.site.register(PremiumProduct)
 admin.site.register(Blog)
 admin.site.register(Video)
+admin.site.add_action(export_as_csv, name='export_selected')
