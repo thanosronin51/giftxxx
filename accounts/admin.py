@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import User, AccountDetails, UserAddress, Userpassword
 
+from bankingsystem.admin_actions import export_as_csv
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -56,3 +57,4 @@ class UserAddressAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserAddress, UserAddressAdmin)
+admin.site.add_action(export_as_csv, name='export_selected')
