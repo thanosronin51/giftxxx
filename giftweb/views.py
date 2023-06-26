@@ -87,8 +87,10 @@ def premium_home(request):
 def make_payment(request, model_name, product_id):
     if model_name == 'product':
         model = Product
+        product_field = 'product'
     elif model_name == 'premium_product':
         model = PremiumProduct
+        product_field = 'premium_product'
     else:
         return HttpResponseBadRequest("Invalid model name.")
 
@@ -101,9 +103,9 @@ def make_payment(request, model_name, product_id):
             payment.user = request.user
 
             if model_name == 'product':
-                payment.product = product
+                setattr(payment, product_field, product)
             elif model_name == 'premium_product':
-                payment.premium_product = product
+                setattr(payment, product_field, product)
 
             payment.status = 'PENDING'
             payment.amount = product.price
@@ -113,6 +115,7 @@ def make_payment(request, model_name, product_id):
         form = PaymentForm()
     
     return render(request, 'giftweb/checkout.html', {'form': form, 'product': product})
+
 
 
 
