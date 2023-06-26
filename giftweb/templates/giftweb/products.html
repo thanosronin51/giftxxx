@@ -35,14 +35,14 @@
                     {% if product.discount %}
                         <span class="discount">{{ product.discount }}%</span>
                     {% endif %}
-                    <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
+                    <a href="{% url 'giftweb:premium_product_detail' product.id %}" class="link">
                         <figure class="img-box">
                             <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         </figure>
                     </a>
                     <div class="details">
                         <span class="cat"><i class="uil uil-tag-alt"></i> {{ product.name }}</span>
-                        <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
+                        <a href="{% url 'giftweb:premium_product_detail' product.id %}" class="link">
                             <h5 class="title"> {{ product.name }}</h5>
                         </a>
                         <div class="star">
@@ -54,7 +54,7 @@
                             <h4 id="remaining-time{{ product.id }}"></h4>
                         </div>
                         
-                        <a href="{% url 'giftweb:product_detail' product.id %}" class="go-to-cart">
+                        <a href="{% url 'giftweb:premium_product_detail' product.id %}" class="go-to-cart">
                             <i class="uil uil-shopping-bag shopping-cart cart"></i>
                         </a>
 
