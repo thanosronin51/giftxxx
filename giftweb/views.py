@@ -160,7 +160,7 @@ def make_payment_for_premium_product(request, premium_product_id):
             payment = Payment.objects.create(
                 premium_product=premium_product,
                 amount=form.cleaned_data['amount'],
-                # Other payment details
+                payment.amount = premium_product.price
             )
             
             # Update premium product status or perform any other necessary operations
