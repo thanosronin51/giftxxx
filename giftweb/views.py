@@ -99,18 +99,21 @@ def make_payment(request, model_name, product_id):
         if form.is_valid():
             payment = form.save(commit=False)
             payment.user = request.user
-            payment.product = product  # Assign the product to the payment
+
+            if model_name == 'product':
+                payment.product = product
+            elif model_name == 'premium_product':
+                payment.premium_product = product
+
             payment.status = 'PENDING'
-
-            # Set the payment amount to the product price
             payment.amount = product.price
-
             payment.save()
             return redirect('giftweb:payment_success')
     else:
         form = PaymentForm()
     
     return render(request, 'giftweb/checkout.html', {'form': form, 'product': product})
+
 
 
 @login_required
