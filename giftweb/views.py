@@ -36,12 +36,14 @@ class ProductDetailView(DetailView):
 
         return context
 
+from django.core.paginator import Paginator
+
 def home(request):
-    products = Product.objects.all()
+    all_products = Product.objects.all()
 
     # Calculate the remaining time for each product
     current_time = timezone.now()
-    for product in products:
+    for product in all_products:
         remaining_time = product.countdown_time - (current_time - product.timestamp)
         days = remaining_time.days
         hours, remainder = divmod(remaining_time.seconds, 3600)
@@ -56,6 +58,11 @@ def home(request):
         if product.discount:
             discounted_price = product.price - (product.price * product.discount / 100)
             product.discounted_price = discounted_price
+
+    # Pagination
+    paginator = Paginator(all_products, 10)  # Number of products per page
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
 
     return render(request, 'giftweb/index.html', {'products': products})
 
