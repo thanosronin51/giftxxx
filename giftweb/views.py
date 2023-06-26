@@ -82,7 +82,7 @@ def premium_home(request):
 
     return render(request, 'giftweb/products.html', {'products': products})
 
-"""
+
 @login_required
 def make_payment(request, model_name, product_id):
     if model_name == 'product':
@@ -110,68 +110,7 @@ def make_payment(request, model_name, product_id):
     else:
         form = PaymentForm()
     
-    return render(request, 'giftweb/checkout.html', {'form': form, 'product': product})"""
-
-
-from django.shortcuts import render, get_object_or_404
-from .models import Product
-
-@login_required  # Assuming you want to restrict payment processing to authenticated users
-def make_payment_for_product(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    
-    if request.method == 'POST':
-        # Process the payment
-        # Assuming you have a form with payment details
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            # Payment processing logic goes here
-            # You can access form data using form.cleaned_data
-            # Example: Save payment details to database
-            payment = Payment.objects.create(
-                user=request.user,  # Assign the current user to the payment
-                product=product,
-                amount=form.cleaned_data['amount'],
-                # Other payment details
-            )
-            
-            # Update product status or perform any other necessary operations
-            
-            return render(request, 'giftweb/payment_success.html')
-    else:
-        form = PaymentForm()
-    
-    return render(request, 'giftweb/make_payment_product.html', {'product': product, 'form': form})
-
-from django.shortcuts import render, get_object_or_404
-from .models import PremiumProduct
-
-def make_payment_for_premium_product(request, premium_product_id):
-    premium_product = get_object_or_404(PremiumProduct, id=premium_product_id)
-    
-    if request.method == 'POST':
-        # Process the payment
-        # Assuming you have a form with payment details
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            # Payment processing logic goes here
-            # You can access form data using form.cleaned_data
-            # Example: Save payment details to database
-            payment = Payment.objects.create(
-                premium_product=premium_product,
-                amount=form.cleaned_data['amount'],
-                payment.amount = premium_product.price
-            )
-            
-            # Update premium product status or perform any other necessary operations
-            
-            return render(request, 'giftweb/payment_success.html')
-    else:
-        form = PaymentForm()
-    
-    return render(request, 'giftweb/make_payment_premium_product.html', {'premium_product': premium_product, 'form': form})
-
-
+    return render(request, 'giftweb/checkout.html', {'form': form, 'product': product})
 
 
 @login_required
@@ -184,7 +123,7 @@ def payment_success(request):
 def about(request):
     videos = Video.objects.all()
     return render(request, 'giftweb/about.html', {'videos': videos})
-
+    
 def blog_list(request):
     blogs = Blog.objects.all()
     return render(request, 'giftweb/blog.html', {'blogs': blogs})
@@ -259,5 +198,3 @@ def payment_history(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'giftweb/payment_history.html', {'page_obj': page_obj})
-
-
