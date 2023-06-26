@@ -59,7 +59,7 @@
 
                 <div class="col-md-6">
                     <p class="remaining-time">Remaining Time: <span id="remaining-time"></span></p>
-                    <a href="{% url 'giftweb:make_payment_product' product_id=product.id %}" class="btn btn-primary">
+                    <a href="{% url 'giftweb:make_payment' model_name='product' product_id=product.id %}" class="btn btn-primary">
                         <i class="uil uil-shopping-bag shopping-cart cart"></i> Buy Now
                     </a>
 
