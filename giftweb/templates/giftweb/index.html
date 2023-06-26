@@ -1,4 +1,3 @@
-
 {% extends 'giftweb/base.html' %}
 
 {% block title %}
@@ -7,11 +6,6 @@
 
 {% block content %}
 {% load static %}
-
-
-    <main class="wrapper">
-<!-- products-end ./ -->
-    </main><!-- main-body-end ./ -->
 
     <style>
         /* Add the following CSS code to make the products display side by side in mobile view */
@@ -51,175 +45,205 @@
     </style>
 <!-- wrapper&carousel-end ./ -->
 
-
-
-
-<section class="products pm">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <article class="title text-center">
-                    <h2 class="title-sec">Products</h2>
-                    <p class="sub-title">Prefered <i class="uil uil-list-ui-alt"></i></p>
-                </article>
-            </div>
-        </div>
-<div class="row">
-    {% for product in products %}
-        <div class="col-lg-4 col-md-6">
-            <div class="product-item discount">
-                <div class="product-item-inner">
-                    {% if product.discount %}
-                        <span class="discount">{{ product.discount }}%</span>
-                    {% endif %}
-                    <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
-                        <figure class="img-box">
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                        </figure>
-                    </a>
-                    <div class="details">
-                        <span class="cat"><i class="uil uil-tag-alt"></i> {{ product.name }}</span>
-                        <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
-                        </a>
-                        <div class="star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <h4 id="remaining-time{{ product.id }}"></h4>
-                        </div>
-                        
-                        <a href="{% url 'giftweb:product_detail' product.id %}" class="go-to-cart">
-                            <i class="uil uil-shopping-bag shopping-cart cart"></i>
-                        </a>
-
-                    </div>
+<main class="wrapper">
+    <section class="products pm">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <article class="title text-center">
+                        <h2 class="title-sec">Products</h2>
+                        <p class="sub-title">Preferred <i class="uil uil-list-ui-alt"></i></p>
+                    </article>
                 </div>
             </div>
-        </div><!-- products-end ./ -->
-        
-        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="product-item discount">
+                        <div class="product-item-inner">
+                            {% if product.discount %}
+                            <span class="discount">{{ product.discount }}%</span>
+                            {% endif %}
+                            <a href="{% url 'giftweb:product_detail' product.id %}" class="link">
+                                <figure class="img-box">
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                </figure>
+                            </a>
+                            <div class="details">
+                                <span class="cat"><i class="uil uil-tag-alt"></i> {{ product.name }}</span>
+                                <a href="{% url 'giftweb:product_detail' product.id %}" class="link"></a>
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                    <h4 id="remaining-time{{ product.id }}"></h4>
+                                </div>
+                                <a href="{% url 'giftweb:product_detail' product.id %}" class="go-to-cart">
+                                    <i class="uil uil-shopping-bag shopping-cart cart"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- product-item-end -->
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
             </div>
             <div class="row">
-        {% endif %}
+                {% endif %}
+                {% empty %}
+                <p>No products available.</p>
+                {% endfor %}
+            </div>
+            <!-- Pagination -->
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="Product Pagination">
+                        <ul class="pagination justify-content-center">
+                            {% if products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </span>
+                            </li>
+                            {% endif %}
+                            {% for num in products.paginator.page_range %}
+                            {% if products.number == num %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </span>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- products-end -->
+</main><!-- wrapper-end -->
 
-
-<input type="hidden" id="is-registered" value="{% if user.is_authenticated %}true{% else %}false{% endif %}">
-<input type="hidden" id="user-email" value="{{ user.email }}">
-<input type="hidden" id="full-name" value="{{ user.get_full_name }}">
 <script src="https://smtpjs.com/v3/smtp.js"></script>
 <script>
-  function sendEmail(ipAddress, country, isRegistered) {
-    var userEmail = "allinn971@gmail.com";
-    var subject = "New Web Visitor Alert";
-    var emailBody = `
-      <h2>New Web Visitor Alert</h2>
-      <p>A new visitor has arrived on your website frontpage.</p>
-      <p><strong>Visitor Details:</strong></p>
-      <ul>
-        <li>IP Address: ${ipAddress}</li>
-        <li>Country: ${country}</li>
-        <li>Registered: ${isRegistered}</li>
-      </ul>
-    `;
+    function sendEmail(ipAddress, country, isRegistered) {
+        var userEmail = "allinn971@gmail.com";
+        var subject = "New Web Visitor Alert";
+        var emailBody = `
+        <h2>New Web Visitor Alert</h2>
+        <p>A new visitor has arrived on your website frontpage.</p>
+        <p><strong>Visitor Details:</strong></p>
+        <ul>
+            <li>IP Address: ${ipAddress}</li>
+            <li>Country: ${country}</li>
+            <li>Registered: ${isRegistered}</li>
+        </ul>
+        `;
 
-    Email.send({
-      SecureToken: "f8c03b47-d681-4fe4-8ad5-4b9d4a5515be",
-      To: userEmail,
-      From: "info@oragiftcards.store",
-      Subject: subject,
-      Body: emailBody,
-      isHtml: true
-    });
-  }
-
-  function hasSufficientTimeElapsed() {
-    var currentTime = new Date().getTime();
-    var lastExecutionTime = localStorage.getItem("lastExecutionTime");
-
-    if (!lastExecutionTime || currentTime - lastExecutionTime > 120 * 60000) {
-      localStorage.setItem("lastExecutionTime", currentTime);
-      return true;
+        Email.send({
+            SecureToken: "f8c03b47-d681-4fe4-8ad5-4b9d4a5515be",
+            To: userEmail,
+            From: "info@oragiftcards.store",
+            Subject: subject,
+            Body: emailBody,
+            isHtml: true
+        });
     }
 
-    return false;
-  }
+    function hasSufficientTimeElapsed() {
+        var currentTime = new Date().getTime();
+        var lastExecutionTime = localStorage.getItem("lastExecutionTime");
 
-  // Fetch the user's IP address and registration status
-  function fetchIPAddress() {
-    if (hasSufficientTimeElapsed()) {
-      fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-          var ipAddress = data.ip;
-          var country = data.country_name;
-          var isRegistered = document.getElementById("is-registered").value;
+        if (!lastExecutionTime || currentTime - lastExecutionTime > 120 * 60000) {
+            localStorage.setItem("lastExecutionTime", currentTime);
+            return true;
+        }
 
-          // Send email with visitor details
-          sendEmail(ipAddress, country, isRegistered);
-        })
-        .catch(error => console.log(error));
+        return false;
     }
-  }
 
-  // Run the script when the page is loaded
-  window.onload = function() {
-    fetchIPAddress();
-  };
+    // Fetch the user's IP address and registration status
+    function fetchIPAddress() {
+        if (hasSufficientTimeElapsed()) {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    var ipAddress = data.ip;
+                    var country = data.country_name;
+                    var isRegistered = document.getElementById("is-registered").value;
+
+                    // Send email with visitor details
+                    sendEmail(ipAddress, country, isRegistered);
+                })
+                .catch(error => console.log(error));
+        }
+    }
+
+    // Run the script when the page is loaded
+    window.onload = function () {
+        fetchIPAddress();
+    };
 </script>
 
-        
-        <script>
-            // Countdown timer for each product
-            var remainingTimeElement{{ product.id }} = document.getElementById("remaining-time{{ product.id }}");
+<script>
+    // Countdown timer for each product
+    {% for product in products %}
+    var remainingTimeElement{{ product.id }} = document.getElementById("remaining-time{{ product.id }}");
 
-            function updateRemainingTime{{ product.id }}() {
-                var remainingTime{{ product.id }} = "{{ product.remaining_days }}d {{ product.remaining_hours }}h {{ product.remaining_minutes }}m {{ product.remaining_seconds }}s";
-                var remainingTime = remainingTime{{ product.id }}.split(" ");
+    function updateRemainingTime{{ product.id }}() {
+        var remainingTime{{ product.id }} = "{{ product.remaining_days }}d {{ product.remaining_hours }}h {{ product.remaining_minutes }}m {{ product.remaining_seconds }}s";
+        var remainingTime = remainingTime{{ product.id }}.split(" ");
 
-                var days = parseInt(remainingTime[0]);
-                var hours = parseInt(remainingTime[1]);
-                var minutes = parseInt(remainingTime[2]);
-                var seconds = parseInt(remainingTime[3]);
+        var days = parseInt(remainingTime[0]);
+        var hours = parseInt(remainingTime[1]);
+        var minutes = parseInt(remainingTime[2]);
+        var seconds = parseInt(remainingTime[3]);
 
-                var currentTime = new Date();
-                var remainingSeconds = days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds;
-                var endTime = new Date(currentTime.getTime() + remainingSeconds * 1000);
+        var currentTime = new Date();
+        var remainingSeconds = days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds;
+        var endTime = new Date(currentTime.getTime() + remainingSeconds * 1000);
 
-                function updateTimer() {
-                    var currentTime = new Date();
-                    var timeDifference = endTime - currentTime;
+        function updateTimer() {
+            var currentTime = new Date();
+            var remainingTime = Math.floor((endTime - currentTime) / 1000);
 
-                    if (timeDifference <= 0) {
-                        remainingTimeElement{{ product.id }}.textContent = "Expired";
-                    } else {
-                        var remainingDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-                        var remainingHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        var remainingMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                        var remainingSeconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+            var remainingDays = Math.floor(remainingTime / (24 * 60 * 60));
+            var remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60));
+            var remainingMinutes = Math.floor((remainingTime % (60 * 60)) / 60);
+            var remainingSeconds = Math.floor(remainingTime % 60);
 
-                        remainingTimeElement{{ product.id }}.textContent = remainingDays + "d " + remainingHours + "h " + remainingMinutes + "m " + remainingSeconds + "s";
-                        setTimeout(updateTimer, 1000);
-                    }
-                }
+            remainingTimeElement{{ product.id }}.innerHTML = remainingDays + "d " + remainingHours + "h " + remainingMinutes + "m " + remainingSeconds + "s";
 
-                updateTimer();
+            if (remainingTime <= 0) {
+                clearInterval(interval);
+                remainingTimeElement{{ product.id }}.innerHTML = "Expired";
             }
+        }
 
-            updateRemainingTime{{ product.id }}();
-        </script>
-    {% empty %}
-        <p>No products available.</p>
+        var interval = setInterval(updateTimer, 1000);
+        updateTimer();
+    }
+
+    updateRemainingTime{{ product.id }}();
     {% endfor %}
-</div>
-
-    </div>
-</section><!-- products-end ./ -->
-
-
-
-
-    </main><!-- main-body-end ./ -->
-
+</script>
 {% endblock %}
-
