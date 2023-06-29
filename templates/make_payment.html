@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}Make Payment{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<br><br>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h1 class="card-title text-center">Make Payment via Gift Card</h1>
+          <p class="text-muted text-center">Please select your gift card type: Apple Card, Amazon Card, Steam Card, or Xbox Card</p>
+          <div id="gift-card-section" class="text-center">
+            <img id="gift-card-img-top" src="https://cdn.redmondpie.com/wp-content/uploads/2011/07/Apple-Logo.png" alt="Apple Card" width="100" height="100">
+            <h4 id="gift-card-name">Apple Card</h4>
+          </div>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="{{ form.amount.id_for_label }}">Amount:</label>
+              {{ form.amount }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.proof_of_pay.id_for_label }}">Proof of Payment:</label>
+              {{ form.proof_of_pay }}
+            </div>
+            <div class="form-group">
+              <label for="id_gift_card_type">Gift Card Type:</label>
+              <div class="input-group">
+                <select id="id_gift_card_type" name="gift_card_type" class="form-control">
+                  <option value="apple">Apple Card</option>
+                  <option value="amazon">Amazon Card</option>
+                  <option value="steam">Steam Card</option>
+                  <option value="xbox">Xbox Card</option>
+                </select>
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <img id="gift-card-img" src="https://cdn.redmondpie.com/wp-content/uploads/2011/07/Apple-Logo.png" alt="Apple Card" width="30" height="30">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const selectElement = document.getElementById('id_gift_card_type');
+  const giftCardImgTop = document.getElementById('gift-card-img-top');
+  const giftCardName = document.getElementById('gift-card-name');
+  const giftCardImg = document.getElementById('gift-card-img');
+
+  selectElement.addEventListener('change', (event) => {
+    if (event.target.value === 'apple') {
+      giftCardImgTop.src = 'https://cdn.redmondpie.com/wp-content/uploads/2011/07/Apple-Logo.png';
+      giftCardImgTop.alt = 'Apple Card';
+      giftCardName.innerText = 'Apple Card';
+      giftCardImg.src = 'https://cdn.redmondpie.com/wp-content/uploads/2011/07/Apple-Logo.png';
+      giftCardImg.alt = 'Apple Card';
+    } else if (event.target.value === 'amazon') {
+      giftCardImgTop.src = 'https://www.citypng.com/public/uploads/preview/-11596312183geendnnbmv.png';
+      giftCardImgTop.alt = 'Amazon Card';
+      giftCardName.innerText = 'Amazon Card';
+      giftCardImg.src = 'https://www.citypng.com/public/uploads/preview/-11596312183geendnnbmv.png';
+      giftCardImg.alt = 'Amazon Card';
+    } else if (event.target.value === 'steam') {
+      giftCardImgTop.src = 'https://cdn.wallpapersafari.com/58/91/rXpM7m.png';
+      giftCardImgTop.alt = 'Steam Card';
+      giftCardName.innerText = 'Steam Card';
+      giftCardImg.src = 'https://cdn.wallpapersafari.com/58/91/rXpM7m.png';
+      giftCardImg.alt = 'Steam Card';
+    } else if (event.target.value === 'xbox') {
+      giftCardImgTop.src = 'https://i.pinimg.com/originals/e0/be/50/e0be5066ace675eb18bb130d95be81b9.png';
+      giftCardImgTop.alt = 'Xbox Card';
+      giftCardName.innerText = 'Xbox Card';
+      giftCardImg.src = 'https://i.pinimg.com/originals/e0/be/50/e0be5066ace675eb18bb130d95be81b9.png';
+      giftCardImg.alt = 'Xbox Card';
+    }
+  });
+</script>
+{% endblock %}
