@@ -1,16 +1,14 @@
 {% load i18n static admin_soft %}
 
-
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3  " id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-0" href="{% url 'admin:index' %}">
-      <img src="https://1.bp.blogspot.com/-yIt05NVyOF0/WdYdw6FRM7I/AAAAAAAAA2c/Y8szr6n7DNwk_og9uPp8Fw1Wvz2PwAMZQCLcBGAs/s1600/Letter%2BB%2BLogo%2BDesign%2BDesign%2BTransparent%2Bfree.png" class="navbar-brand-img h-100" alt="main_logo">
-      <span class="ms-1 font-weight-bold">IB-COINEX</span>
+      <img src="{% static 'img/logo-ct-dark.png' %}" class="navbar-brand-img h-100" alt="main_logo">
+      <span class="ms-1 font-weight-bold">Soft UI Dashboard</span>
     </a>
   </div>
   <hr class="horizontal dark mt-0">
-
   <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
     <ul class="navbar-nav">
 
@@ -25,7 +23,7 @@
                         <span class="sidebar-icon {{ app.icon }}"></span>
                       </div>
                       <a href="{{ app.url }}">
-                        <span class="nav-link-text ms-1">{{ app.label|slice:30 }}{% if app.label|length > 30 %}..{% endif %}</span>
+                        <span class="nav-link-text ms-1">{{ app.label|slice:10 }}{% if app.label|length > 10 %}..{% endif %}</span>
                       </a>
                     </span>
                   </span>
@@ -79,12 +77,13 @@
         </a>
       </li>
 
+
       <li class="nav-item">
 
         {% if request.user.is_superuser %}
-        <a href="{% url 'accounts:select_user' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
+        <a href="{% url 'select_user' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
         {% else %}
-        <a href="{% url 'accounts:select_user' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
+        <a href="{% url 'select_user' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
         {% endif %}
 
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -107,13 +106,12 @@
       </li>
 
 
-
       <li class="nav-item">
 
         {% if request.user.is_superuser %}
-        <a href="{% url 'accounts:change_password' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
+        <a href="{% url 'change_password_view' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
         {% else %}
-        <a href="{% url 'accounts:change_password' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
+        <a href="{% url 'change_password_view' %}" class="nav-link {% if 'index' in segment %} active {% endif %}">
         {% endif %}
 
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -134,6 +132,9 @@
           <span class="nav-link-text ms-1">{% trans 'Change Passwords' %}</span>
         </a>
       </li>
+
+
+
 
     {% if request.user.is_authenticated and not request.user.is_superuser %}
 
@@ -299,13 +300,13 @@
         </div>
         <div class="docs-info">
           <h6 class="text-white up mb-0">Need help?</h6>
-          <a href="javascript:void" 
+          <a href="https://docs.appseed.us/products/django-dashboards/soft-ui-dashboard/" 
              target="_blank" class="btn btn-white btn-sm w-100 mb-0">Read the DOCS</a>
         </div>
       </div>
     </div>
     <a target="_blank"
        class="btn bg-gradient-primary mt-3 w-100" 
-       href="javascript:void">Support</a>
+       href="https://appseed.us/support/">Support</a>
   </div>
 </aside>
