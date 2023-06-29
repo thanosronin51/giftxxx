@@ -104,3 +104,4 @@ vine==5.0.0
 wcwidth==0.2.6
 whitenoise==6.4.0
 gunicorn==20.1.0
+django-model-utils
