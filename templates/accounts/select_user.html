@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -89,7 +90,7 @@
         <label for="user-select">Select a user:</label>
         <select id="user-select" name="user">
             {% for user in users %}
-            <option value="{{ user.email }}">{{ user.email }}  {{ user.first_name }}</option>
+            <option value="{{ user.email }}">{{ user.first_name }} {{ user.last_name }}</option>
             {% endfor %}
         </select>
 
@@ -99,17 +100,18 @@
         <label for="file-input">Attach Document:</label>
         <input type="file" id="file-input" name="file">
 
-        <button type="button" onclick="sendEmail()">Send Email</button>
+        <button type="button" onclick="sendEmail(document.getElementById('user-select').selectedOptions[0].text, document.getElementById('user-select').selectedOptions[0].dataset.fullName)">Send Email</button>
     </form>
     <button type="button" onclick="goBack()">Go Back</button>
 
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
 <script>
   function goBack() {
     window.history.back();
   }
 
-  function sendEmail() {
+  function sendEmail(fullName) {
     const userEmail = document.getElementById('user-select').value;
     const message = document.getElementById('message-input').value;
     const fileInput = document.getElementById('file-input');
@@ -122,22 +124,270 @@
         data: reader.result.split(',')[1] // Get base64 encoded data
       };
 
-      const subject = "Confirmation from IBcoinex";
+      const subject = "Confirmation from AGENCY JOBS";
       const body = message;
 
-      const fileAttachment = '<tr><td colspan="2" style="padding:20px;"><p>Attached File: ' + attachment.name + '</p></td></tr>';
+      const emailTemplate = `
+        <html>
+        <head>
+        <style type="text/css">
+          #outlook a {
+            padding: 0;
+          }
+
+          body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+          }
+
+          table,
+          td {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+          }
+
+          img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+          }
+
+          p {
+            display: block;
+            margin: 13px 0;
+          }
+        </style>
+
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          @import url(https://fonts.googleapis.com/css?family=Muli:300,400,700);
+        </style>
+        <!--<![endif]-->
+        <style type="text/css">
+          @media only screen and (min-width:480px) {
+            .mj-column-per-100 {
+              width: 100% !important;
+              max-width: 100%;
+            }
+          }
+        </style>
+        <style type="text/css">
+          @media only screen and (max-width:480px) {
+            table.mj-full-width-mobile {
+              width: 100% !important;
+            }
+
+            td.mj-full-width-mobile {
+              width: auto !important;
+            }
+          }
+        </style>
+        <style type="text/css">
+          a,
+          span,
+          td,
+          th {
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+          }
+        </style>
+        </head>
+        <body>
+<div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Confirmation</div>
+<div style="background-color:#f9f0e6;">
+  <div style="margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                <tr>
+                  <td style="font-size:0px;word-break:break-word;">
+                    <div style="height:20px;"> &nbsp; </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                      <tbody>
+                        <tr>
+                          <td style="width:75px;">
+                            <img height="auto" src="https://www.seekpng.com/png/detail/927-9274049_aj-logo-design-png-hd.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="75">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin:0 auto;max-width:600px;">
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+      <tr style="vertical-align:top;">
+        <td background="https://www.seekpng.com/png/detail/927-9274049_aj-logo-design-png-hd.png" style="background:#2a3448 url(https://www.njemploymentlawfirmblog.com/files/2015/10/Business-People-at-Employment-Agency.jpg) no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;" height="300">
+          <div class="mj-hero-content" style="margin:0px auto;">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
+              <tr>
+                <td style>
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px;">
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+            <div style="margin:0px auto;max-width:600px;">
+              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                <tbody>
+                  <tr>
+                    <td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+                      <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style="font-family:Muli, Arial, sans-serif;font-size:20px;font-weight:400;line-height:30px;text-align:left;color:#333333;">
+                                <h1 style="margin: 0; font-size: 24px; line-height: normal; font-weight: bold;">Confirmation</h1>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <p style="border-top: solid 1px #F4F5FB; font-size: 1px; margin: 0px auto; width: 100%;"></p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style="font-family:Muli, Arial, sans-serif;font-size:16px;font-weight:400;line-height:20px;text-align:left;color:#333333;">
+                                <h1 style="margin: 0; font-size: 16px; line-height: normal; font-weight: bold;"><bold> Hi ${fullName},</bold></h1>
+                                <p>${body}</p>
+                              </div>
+                            </td>
+                          </tr>+fileAttachment +
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style="font-family:Muli, Arial, sans-serif;font-size:16px;font-weight:400;line-height:20px;text-align:left;color:#333333;">
+                                <p style="margin: 0;">Thank you for selecting AGENCY JOBS as your preferred Job seeking  platform. Our dedicated team is here to ensure your Job seeking  experience is seamless and successful. Feel free to reach out to us at any time with your questions or concerns.</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="margin:0px auto;max-width:600px;">
+              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                <tbody>
+                  <tr>
+                    <td style="direction:ltr;font-size:0px;padding:0;text-align:center;">
+                      <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style="font-family:Muli, Arial, sans-serif;font-size:16px;font-weight:400;line-height:20px;text-align:left;color:#333333;">
+                                <p style="margin: 0;">Best regards</p>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style="font-family:Muli, Arial, sans-serif;font-size:16px;font-weight:400;line-height:20px;text-align:left;color:#333333;">
+                                <p style="margin: 0;"> Thanks, <br> The  AGENCY JOBS Team</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                <tr>
+                  <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                    <div style="font-family:Muli, Arial, sans-serif;font-size:14px;font-weight:400;line-height:20px;text-align:center;color:#616161;">© 2023 AGENCY JOBS, Inc. New York, USA</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                    <div style="font-family:Muli, Arial, sans-serif;font-size:14px;font-weight:400;line-height:20px;text-align:center;color:#616161;">You can check <a href="https://http://www.oragiftcards.store/premium_home" style="color: #AC7B4C; text-decoration: none;"> Latest Premuim Job Offers</a>. Things can be so easy these days </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+      <tbody>
+        <tr>
+          <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                <tr>
+                  <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                    <div style="font-family:Muli, Arial, sans-serif;font-size:14px;font-weight:400;line-height:20px;text-align:center;color:#616161;">You are receiving this email because you signed up for AGENCY JOBS store newsletter. If you wish to unsubscribe, you can do so <a href="/" style="color: #AC7B4C; text-decoration: none;">here</a>.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+          <div style="padding: 20px; text-align: center;">
+            <p>Attached File: ${attachment.name}</p>
+          </div>
+        </body>
+        </html>
+      `;
 
       Email.send({
-        SecureToken: "102bdd09-0554-4aeb-96bd-095969789bfc",
+        SecureToken: "4976757d-7e82-4b6f-9c52-2f233b42c63f",
         To: userEmail,
-        From: "iagency_jobs@biggy.store",
+        From: "info@agencyjobs.site",
         Subject: subject,
-        Body: '<table style="width:100%;max-width:600px;margin:auto;font-family:Arial, sans-serif;font-size:16px;line-height:1.4;color:#333333;">' +
-          '<tr style="background-color:#00308F;color:white;font-size:20px;font-weight:bold;text-align:center;"><td colspan="2" style="padding:20px;"><img src="https://clipground.com/images/png-logos-1.png" alt="IBcoinex Logo" style="width:150px;height:auto;"></td></tr>' +
-          '<tr><td colspan="2" style="padding:20px;"><p>Dear Valued Customer,</p><p>' + body + '</p><p>Thank you for choosing IBcoinex as your preferred trading platform. Should you have any questions, please do not hesitate to contact us.</p><p>Best regards,</p><p>The IBcoinex Team</p></td></tr>' +
-          fileAttachment +
-          '<tr style="background-color:#f2f2f2;"><td style="padding:20px;text-align:center;"><img src="https://clipground.com/images/png-logos-1.png" alt="Phone Icon" style="width:30px;height:auto;"><br><br><p style="font-size:18px;font-weight:bold;">Contact Us</p><p style="margin-bottom:5px;"></p><p>Email: info@ibcoinex.org</p></td></tr>' +
-          '</table>',
+        Body: emailTemplate,
         Attachments: [attachment]
       }).then(
         message => alert("Email sent successfully!")
@@ -147,5 +397,7 @@
     reader.readAsDataURL(file); // Read file as base64 data
   }
 </script>
+
+
 
 </body>
