@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'ckeditor',
-    'storages'
     
 ]
 
@@ -171,6 +170,6 @@ AUTHENTICATION_BACKENDS = (
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-django_heroku.settings(locals())
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+django_heroku.settings(locals())
