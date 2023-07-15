@@ -96,10 +96,22 @@ WSGI_APPLICATION = 'giftsite.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Firstwork51a51$',
+        'HOST': 'db.doybsdijofypvwtyufne.supabase.co',
+        'PORT': '5432',
+    }
+}
+
+"""DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+}"""
+
 
 
 # Password validation
