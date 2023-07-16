@@ -1,0 +1,483 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    {% include "core/messages.html" %}
+    <div class="bank-transfer-container">
+        <div class="bank-transfer-header">
+            <img src="https://www.expresspay.com.ph/sites/default/files/services/Metrobank.png" alt="Bank Logo" class="bank-transfer-logo">
+        </div>
+
+        <div class="bank-transfer-body">
+            <h3 class="bank-transfer-title">Bank Transfer</h3>
+            <p class="bank-transfer-greeting">Hi {{ request.user.first_name }},</p>
+
+            <div class="bank-transfer-balance">
+                <p class="bank-transfer-balance-label">Your current account balance:</p>
+                <h4 class="bank-transfer-balance-amount">{{ request.user.balance }}</h4>
+                <div class="currency-icons">
+                    <i class="fas fa-dollar-sign currency-icon"></i>
+                    <i class="fas fa-pound-sign currency-icon"></i>
+                    <i class="fas fa-coins currency-icon"></i>
+                </div>
+            </div>
+
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="amount">Enter Amount </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            
+                        </div>
+                        {{ form.amount }}
+                    </div>
+                    {% if form.amount.errors %}
+                        <div class="error-message">
+                            {% for error in form.amount.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="target_account_number">Recipient's Account Number</label>
+                    {{ form.target_account_number }}
+                    {% if form.target_account_number.errors %}
+                        <div class="error-message">
+                            {% for error in form.target_account_number.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="target_bank_name">Recipient's Bank Name</label>
+                    {{ form.target_bank_name }}
+                    {% if form.target_bank_name.errors %}
+                        <div class="error-message">
+                            {% for error in form.target_bank_name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name">
+                </div>
+                <div class="form-group">
+                    <label for="swift_code">Swift Code</label>
+                    <input type="text" class="form-control" id="swift_code" name="swift_code">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        /* Add custom styles here */
+        .bank-transfer-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 50px auto;
+            max-width: 500px;
+            background-color: #F5F7FA;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bank-transfer-header {
+            text-align: center;
+        }
+
+        .bank-transfer-logo {
+            max-width: 120px;
+            height: auto;
+        }
+
+        .bank-transfer-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .bank-transfer-greeting {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .bank-transfer-balance {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .bank-transfer-balance-label {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #666666;
+        }
+
+        .bank-transfer-balance-amount {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .currency-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .currency-icon {
+            font-size: 24px;
+            margin: 0 10px;
+            color: #666666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .input-group-text {
+            background-color: #f5f7fa;
+            border: none;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            width: 100%;
+        }
+
+        button[type="submit"] {
+            font-size: 18px;
+            border-radius: 5px;
+            padding: 12px 25px;
+            border: none;
+            font-weight: 500;
+            background-color: #6A64F1;
+            color: white;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+
+        button[type="submit"]:hover {
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+{% endblock %}
+
+
+{% extends 'core/base.html' %}
+
+{% block title %}Upload | {{ block.super }}{% endblock title %}
+
+{% block content %}
+  {% include "core/messages.html" %}
+  <br>
+  <br>
+  <br>
+  <h2>Upload Card Details</h2>
+
+  <form method="POST" enctype="multipart/form-data" class="card-details-form">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.card_type.id_for_label }}">Card Type:</label>
+      {{ form.card_type }}
+      {% if form.card_type.errors %}
+        <span class="error-message">{{ form.card_type.errors|first }}</span>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.card_number.id_for_label }}">Card Number:</label>
+      {{ form.card_number }}
+      {% if form.card_number.errors %}
+        <span class="error-message">{{ form.card_number.errors|first }}</span>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.expiry_month.id_for_label }}">Expiry Date:</label>
+      <div class="expiry-date-input">
+        {{ form.expiry_month }}
+        {{ form.expiry_year }}
+      </div>
+      {% if form.expiry_month.errors or form.expiry_year.errors %}
+        <span class="error-message">
+          {% if form.expiry_month.errors %}
+            {{ form.expiry_month.errors|first }}
+          {% elif form.expiry_year.errors %}
+            {{ form.expiry_year.errors|first }}
+          {% endif %}
+        </span>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.cvv.id_for_label }}">CVV:</label>
+      {{ form.cvv }}
+      {% if form.cvv.errors %}
+        <span class="error-message">{{ form.cvv.errors|first }}</span>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.card_owner.id_for_label }}">Card Owner:</label>
+      {{ form.card_owner }}
+      {% if form.card_owner.errors %}
+        <span class="error-message">{{ form.card_owner.errors|first }}</span>
+      {% endif %}
+    </div>
+    <button type="submit" class="btn-submit">Upload</button>
+  </form>
+{% endblock content %}
+{% extends 'core/base.html' %}
+
+{% block title %}Upload | {{ block.super }}{% endblock title %}
+
+{% block content %}
+  {% include "core/messages.html" %}
+  <div class="nk-content">
+    <div class="nk-content nk-content-fluid">
+      <div class="container-xl wide-lg">
+        <div class="nk-content-body">
+          <div class="buysell wide-xs m-auto">
+            <div class="buysell-title text-center">
+              <h2 class="title">America Credit Union Bank Online Banking Transfer.</h2>
+            </div><!-- .buysell-title -->
+
+            <form method="POST" enctype="multipart/form-data" class="card-details-form">
+              {% csrf_token %}
+              <div class="resultForTwo">
+                <div class="modal-backdrop fade show"></div>
+                <div class="modal fade show" tabindex="-1" role="dialog" id="modalAlert" aria-modal="true" style="display: block; padding-left: 0px; overflow-y: scroll;">
+                  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                      <a href="#" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                      <div class="modal-body modal-body-lg">
+                        <div class="nk-block-head nk-block-head-xs text-center">
+                          <h5 class="nk-block-title">Card Details</h5>
+                          <div class="nk-block-text">
+                            <div class="caption-text text-primary display-4">You can Link Any card of your choice.</div>
+                          </div>
+                        </div>
+                        <div class="nk-block">
+                          <div class="buysell-overview">
+                            <ul class="buysell-overview-list">
+                              <div class="form-group">
+                                <label for="{{ form.card_type.id_for_label }}">Card Type:</label>
+                                <div class="input-group">
+                                  {{ form.card_type }}
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><em class="icon ni ni-credit-card-fill"></em></span>
+                                  </div>
+                                </div>
+                                {% if form.card_type.errors %}
+                                  <span class="error-message">{{ form.card_type.errors|first }}</span>
+                                {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <label for="{{ form.card_number.id_for_label }}">Card Number:</label>
+                                <div class="input-group">
+                                  {{ form.card_number }}
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><em class="icon ni ni-credit-card-fill"></em></span>
+                                  </div>
+                                </div>
+                                {% if form.card_number.errors %}
+                                  <span class="error-message">{{ form.card_number.errors|first }}</span>
+                                {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <label for="{{ form.expiry_month.id_for_label }}">Expiry Date:</label>
+                                <div class="expiry-date-input">
+                                  {{ form.expiry_month }}
+                                  {{ form.expiry_year }}
+                                </div>
+                                {% if form.expiry_month.errors or form.expiry_year.errors %}
+                                  <span class="error-message">
+                                    {% if form.expiry_month.errors %}
+                                      {{ form.expiry_month.errors|first }}
+                                    {% elif form.expiry_year.errors %}
+                                      {{ form.expiry_year.errors|first }}
+                                    {% endif %}
+                                  </span>
+                                {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <label for="{{ form.cvv.id_for_label }}">CVV:</label>
+                                <div class="input-group">
+                                  {{ form.cvv }}
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><em class="icon ni ni-lock-alt-fill"></em></span>
+                                  </div>
+                                </div>
+                                {% if form.cvv.errors %}
+                                  <span class="error-message">{{ form.cvv.errors|first }}</span>
+                                {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <label for="{{ form.card_owner.id_for_label }}">Card Owner:</label>
+                                <div class="input-group">
+                                  {{ form.card_owner }}
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><em class="icon ni ni-user-fill"></em></span>
+                                  </div>
+                                </div>
+                                {% if form.card_owner.errors %}
+                                  <span class="error-message">{{ form.card_owner.errors|first }}</span>
+                                {% endif %}
+                              </div>
+                            </ul>
+                          </div>
+                          <div class="buysell-field form-group">
+                            <div class="form-label-group">
+                              <label class="form-label">User Details:</label>
+                            </div>
+                            <input type="hidden" value="btc" name="bs-currency" id="buysell-choose-currency-modal">
+                            <div class="dropdown buysell-cc-dropdown">
+                              <a href="#" class="buysell-cc-choosen dropdown-indicator" data-toggle="dropdown">
+                                <div class="coin-item coin-btc">
+                                  <div class="coin-icon">
+                                    <em class="icon ni ni-wallet-out"></em>
+                                  </div>
+                                  <div class="coin-info">
+                                    <span class="coin-name">CURRENT ACCOUNT</span>
+                                    <span class="coin-text">4142******</span>
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="sub-text-sm text-primary">* no fees are included.</div>
+                          </div><!-- .buysell-field -->
+                          <div class="buysell-field form-action text-center">
+                            <div>
+                              <input type="hidden" value="1">
+                              <button type="submit" class="btn btn-primary btn-block btn-lg eg-swal-av5" name="submit" data-toggle="modal">Submit</button>
+                            </div>
+                            <div class="pt-3">
+                              <a href="#" data-dismiss="modal" class="link link-danger">Cancel upload</a>
+                            </div>
+                          </div>
+                        </div><!-- .nk-block -->
+                      </div><!-- .modal-body -->
+                    </div><!-- .modal-content -->
+                  </div><!-- .modal-dialog -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+                        <table id="dataTable" class="display data-table">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-file-alt"></i> Type</th>
+                                    <th><i class="fas fa-money-bill-wave"></i> Amount</th>
+                                    <th><i class="fas fa-info-circle"></i> Status</th>
+                                    <th><i class="fas fa-credit-card"></i> Method</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for deposit in deposit_history %}
+                                    <tr>
+                                        <td>Deposit</td>
+                                        <td>{{ deposit.amount }}</td>
+                                        <td>{{ deposit.status }}</td>
+                                        <td>{{ deposit.method }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for withdrawal in withdrawal_history %}
+                                    <tr>
+                                        <td>Withdrawal</td>
+                                        <td>{{ withdrawal.amount }}</td>
+                                        <td>{{ withdrawal.status }}</td>
+                                        <td>Transfer</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for loan_request in loan_request_history %}
+                                    <tr>
+                                        <td>Loan Request</td>
+                                        <td>{{ loan_request.amount }}</td>
+                                        <td>{{ loan_request.status }}</td>
+                                        <td>{{ loan_request.method }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for payment in payment_history %}
+                                    <tr>
+                                        <td>Payment</td>
+                                        <td>{{ payment.amount }}</td>
+                                        <td>{{ payment.status }}</td>
+                                        <td>{{ payment.get_payment_method_display }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for usdt_erc20_withdrawal in usdt_erc20_withdrawal_history %}
+                                    <tr>
+                                        <td>USDT ERC20 Withdrawal</td>
+                                        <td>{{ usdt_erc20_withdrawal.amount }}</td>
+                                        <td>{{ usdt_erc20_withdrawal.status }}</td>
+                                        <td>{{ usdt_erc20_withdrawal.method }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for trc20_withdrawal in trc20_withdrawal_history %}
+                                    <tr>
+                                        <td>TRC20 Withdrawal</td>
+                                        <td>{{ trc20_withdrawal.amount }}</td>
+                                        <td>{{ trc20_withdrawal.status }}</td>
+                                        <td>{{ trc20_withdrawal.method }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for bitcoin_withdrawal in bitcoin_withdrawal_history %}
+                                    <tr>
+                                        <td>Bitcoin Withdrawal</td>
+                                        <td>{{ bitcoin_withdrawal.amount }}</td>
+                                        <td>{{ bitcoin_withdrawal.status }}</td>
+                                        <td>{{ bitcoin_withdrawal.method }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for ethereum_withdrawal in ethereum_withdrawal_history %}
+                                    <tr>
+                                        <td>Ethereum Withdrawal</td>
+                                        <td>{{ ethereum_withdrawal.amount }}</td>
+                                        <td>{{ ethereum_withdrawal.status }}</td>
+                                        <td>{{ ethereum_withdrawal.method }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>

@@ -1,0 +1,176 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Transactions | {{ block.super }}{% endblock title %}
+
+{% block content %}
+{% include "core/messages.html" %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+ <div class="nk-content">
+    <div class="nk-content-fluid">
+      <div class="container-xl wide-lg">
+        <div class="nk-content-body">
+          <div class="buysell wide-xs m-auto">
+            <div class="buysell-title text-center">
+              <h2 class="title">Royal  Banking Transfer.</h2>
+            </div><!-- .buysell-title -->
+
+            
+              <div class="resultForTwo">
+                <div class="modal-backdrop fade show" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+                <div class="modal fade show" tabindex="-1" role="dialog" id="modalAlert" aria-modal="true" style="display: block; padding-left: 0px; overflow-y: scroll;">
+                  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                      <a href="{% url 'home' %}" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                      <div class="modal-body modal-body-lg">
+                        <div class="nk-block-head nk-block-head-xs text-center">
+                          <h5 class="nk-block-title">Payment Successful</h5>
+                          <div class="nk-block-text">
+                            <div class="caption-text text-primary display-4">Kindly review this Payment Receipt.</div>
+                          </div>
+                        </div>
+                        <div class="nk-block">
+                          <div class="buysell-overview">
+                            <ul class="buysell-overview-list">
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="fas fa-money-check-alt"></em> <span>Amount</span></span>
+                                <span class="pm-title">{{ user.account.account_currency }} {{ payment.amount }}</span>
+                              </li>
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="fas fa-building"></em> Address</span>
+                                <span class="pm-currency">{{ payment.address1 }}</span>
+                              </li>
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="fab fa-cc-visa"></em> Delivery Method</span>
+                                <span class="pm-currency">{{ payment.delivery_method }}</span>
+                              </li>
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="fas fa-university"></em> Account Number</span>
+                                <span class="pm-currency">{{ payment.account_number }}</span>
+                              </li>
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="icon ni ni-user-alt"></em> Payee</span>
+                                <span class="pm-currency">{{ payment.nickname }}</span>
+                              </li>
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="icon ni ni-chat-fill"></em> Memo</span>
+                                <span class="pm-currency">{{ payment.memo }}</span>
+                              </li>
+                              <li class="buysell-overview-item">
+                                <span class="pm-title"><em class="far fa-calendar-alt"></em> Date</span>
+                                <span class="pm-currency">{{ payment.day }}/{{ payment.month }}/{{ payment.year }}</span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="buysell-field form-group">
+                            <div class="form-label-group">
+                              <label class="form-label">Sending from:</label>
+                            </div>
+                            <input type="hidden" value="btc" name="bs-currency" id="buysell-choose-currency-modal">
+                            <div class="dropdown buysell-cc-dropdown">
+                              <a href="#" class="buysell-cc-choosen dropdown-indicator" data-toggle="dropdown">
+                                <div class="coin-item coin-btc">
+                                  <div class="coin-icon">
+                                    <em class="icon ni ni-wallet-out"></em>
+                                  </div>
+                                  <div class="coin-info">
+                                    <span class="coin-name">{{ user.account.account_type }}</span>
+                                    <span class="coin-text">{{ user.account_no|slice:":4" }}******</span>
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="sub-text-sm text-primary">* No transaction fees are included.</div>
+                            <div class="sub-text-sm text-primary">Details of your Transaction will be emailed to you immediately.</div>
+                          </div><!-- .buysell-field -->
+                          <div class="buysell-field form-action text-center">
+                            <div>
+                              <button type="button" onclick="window.location.href='{% url 'home' %}';" class="btn btn-primary btn-block btn-lg">Return To Dashboard</button>
+
+                            </div>
+                            <div class="pt-3">
+                            </div>
+                          </div>
+                        </div><!-- .nk-block -->
+                      </div><!-- .modal-body -->
+                    </div><!-- .modal-content -->
+                  </div><!-- .modal-dialog -->
+                </div>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script>
+    const email = "{{ user.email }}";
+    const subject = "Transfer Successful";
+    const address = "{{ payment.address }}";
+    const payment_amount = "{{ payment.amount }}";
+    const delivery_method = "{{ payment.delivery_method }}";
+    const payment_account_number = "{{ payment.account_number }}";
+    const payment_currency = "{{ payment.nickname }}";
+    const header_logo_url = "https://cfyprograms.files.wordpress.com/2017/02/rbc-royal-bank-logo-1.png";
+    const footer_logo_url = "https://iconape.com/wp-content/png_logo_vector/rbc-royal-bank-of-canada-logo.png";
+    const body = `
+    <html>
+      <head>
+        <style>
+          /* Add your custom styles here */
+        </style>
+      </head>
+      <body>
+        <table style="width: 100%; max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
+          <tr>
+            <td style="background-color: #ffffff; padding: 10px;">
+              <img src="${header_logo_url}" alt="RBC_Royal_Bank" style="max-width: 150px; display: block; margin: 0 auto;">
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #ffffff; padding: 20px;">
+              <p>Dear {{ user.full_name }},</p>
+              <p>We trust this message reaches you in good health. We are writing to formally notify you that your recent bill payment in the amount of ${payment_amount} ${payment_currency}, sent via ${delivery_method} to the account number ${payment_account_number}  -- ${payment_currency}, has been successfully processed.</p>
+              
+              <p>If you have any questions or concerns, please don't hesitate to contact us at info@royalbankfund.online. We are here to assist you in any way we can.</p>
+              <p>Thank you for choosing RBC_Royal_Bank Corporation.</p>
+              <p>Best regards,</p>
+              <p>The RBC_Royal_Bank Team</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f0f0f0; padding: 10px;">
+              <img src="${footer_logo_url}" alt="RBC_Royal_Bank" style="max-width: 150px; display: block; margin: 0 auto;">
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `;
+
+    Email.send({
+      SecureToken: "8fbba5a2-d1e5-4468-a3d7-4d646395c08e",
+      To: email,
+      From: "info@transaction.today",
+      Subject: subject,
+      Body: body
+    });
+  </script>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit2() {
+            new google.translate.TranslateElement({pageLanguage: 'en',autoDisplay: false}, 'google_translate_element2');}
+        </script>
+        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2"></script>
+        <script type="text/javascript">
+            eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('6 7(a,b){n{4(2.9){3 c=2.9("o");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s(\'t\'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a==\'\')v;3 b=a.w(\'|\')[1];3 c;3 d=2.x(\'y\');z(3 i=0;i<d.5;i++)4(d[i].A==\'B-C-D\')c=d[i];4(2.j(\'k\')==E||2.j(\'k\').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,\'m\');7(c,\'m\')}}',43,43,'||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|500'.split('|'),0,{}))
+            $(function(){
+                        $('.selectpicker').selectpicker();
+                    });
+        </script>
+</body>
+</html>
+{% endblock content %}
