@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+{% load static %}
+
+<html lang="en-US" class="js">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This Credit Union is federally insured by the National Credit Union Administration. We do business in accordance with the Fair Housing Law and Equal opportunity Credit Act.">
+    <link rel="shortcut icon" href="https://logos-world.net/wp-content/uploads/2021/02/RBC-Emblem.png" type="image/x-icon">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="https://logos-world.net/wp-content/uploads/2021/02/RBC-Emblem.png">
+    <!-- Page Title  -->
+    <title>Register | Welcome to Royal Bank Corporation Online Banking</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.css' %}">
+    <link rel="stylesheet" href="{% static 'scss/sweetalert.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}">
+    <link href="{% static 'css/toastr.css' %}" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<style type="text/css">
+    .btn-primary {
+        background-color: #033d75;
+    }
+
+    .btn-secondary {
+        background-color: #d13636;
+    }
+
+    .btn-secondary:hover {
+        opacity: 0.6;
+    }
+
+    .btn-primary:hover {
+        opacity: 0.6;
+    }
+</style>
+
+<body class="nk-body npc-crypto bg-white pg-auth">
+    <div class="nk-content">
+        <div class="container-xl wide-lg">
+            <div class="nk-content-body">
+                <div class="nk-feature-conten p-3">
+                    <a href="/"> <img src="https://logos-world.net/wp-content/uploads/2021/02/RBC-Emblem.png" width="230" class="p-3"></a>
+                </div>
+            </div>
+            <div class="card card-bordered s-4 col-lg-12 p-0">
+                <div class="card-header font-weight-bold text-light" style="background-color:#033d75;">
+                    <h5 class="text-white"><em class="icon ni ni-user-add-fill"></em> Kindly provide the information requested below to enable us create an account for you.</h5>
+                </div>
+<form method="post" enctype="multipart/form-data" id="registerForm">
+  {% csrf_token %}
+  <div class="card-body">
+    <!-- Personal Details section -->
+    <h2>Personal Details</h2>
+    <hr>
+    <div class="form-row">
+      <!-- Username -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_username"><i class="fas fa-user"></i> Username</label>
+        {{ user_form.username }}
+        {% if user_form.username.errors %}
+        <div class="error">{{ user_form.username.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- First Name -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_first_name"><i class="fas fa-user"></i> First Name</label>
+        {{ user_form.first_name }}
+        {% if user_form.first_name.errors %}
+        <div class="error">{{ user_form.first_name.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Last Name -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_last_name"><i class="fas fa-user"></i> Last Name</label>
+        {{ user_form.last_name }}
+        {% if user_form.last_name.errors %}
+        <div class="error">{{ user_form.last_name.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Email and Password section -->
+    <div class="form-row">
+      <!-- Email -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_email"><i class="fas fa-envelope"></i> Email address</label>
+        {{ user_form.email }}
+        {% if user_form.email.errors %}
+        <div class="error">{{ user_form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Password -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_password1"><i class="fas fa-lock"></i> Password</label>
+        {{ user_form.password1 }}
+        {% if user_form.password1.errors %}
+        <div class="error">{{ user_form.password1.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Confirm Password and Phone Number section -->
+    <div class="form-row">
+      <!-- Confirm Password -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_password2"><i class="fas fa-lock"></i> Confirm Password</label>
+        {{ user_form.password2 }}
+        {% if user_form.password2.errors %}
+        <div class="error">{{ user_form.password2.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Phone Number -->
+      <div class="form-group col-md-6">
+        <label class="form-label" for="id_contact_no"><i class="fas fa-phone"></i> Phone Number</label>
+        {{ user_form.contact_no }}
+        {% if user_form.contact_no.errors %}
+        <div class="error">{{ user_form.contact_no.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+    <div class="form-group">
+      <label>Date of birth:</label>
+      <div class="row">
+        <div class="col-sm-4">
+          {{ account_form.day }}
+        </div>
+        <div class="col-sm-4">
+          {{ account_form.month }}
+        </div>
+        <div class="col-sm-4">
+          {{ account_form.year }}
+        </div>
+      </div>
+    </div>
+
+  <!-- Employment Information section -->
+  <hr>
+  <h2>Employment Information</h2>
+  <div class="form-row">
+    <!-- Occupation -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_occupation"><i class="fas fa-briefcase"></i> Occupation</label>
+      {{ account_form.occupation }}
+      {% if account_form.occupation.errors %}
+      <div class="error">{{ account_form.occupation.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Banking Details section -->
+  <hr>
+  <h2>Banking Details</h2>
+  <hr>
+  <div class="form-row">
+    <!-- Gender -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_gender"><i class="fas fa-venus-mars"></i> Gender</label>
+      {{ account_form.gender }}
+      {% if account_form.gender.errors %}
+      <div class="error">{{ account_form.gender.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Account Type -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_account_type"><i class="fas fa-credit-card"></i> Account Type</label>
+      {{ account_form.account_type }}
+      {% if account_form.account_type.errors %}
+      <div class="error">{{ account_form.account_type.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="form-row">
+    <!-- Account Currency -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_account_currency"><i class="fas fa-money-bill-wave"></i> Account Currency</label>
+      {{ account_form.account_currency }}
+      {% if account_form.account_currency.errors %}
+      <div class="error">{{ account_form.account_currency.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Passport Photograph -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_picture"><i class="fas fa-camera"></i> Passport Photograph</label>
+      <img src="{% static 'assets/passport/sample.png' %}" style="width:100%; height:180px;" id="output_image">
+      {{ account_form.picture }}
+      {% if account_form.picture.errors %}
+      <div class="error">{{ account_form.picture.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Postal Code and Country section -->
+  <div class="form-row">
+    <!-- Postal Code -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_postal_code"><i class="fas fa-map-marker-alt"></i> Postal Code</label>
+      {{ address_form.postal_code }}
+      {% if address_form.postal_code.errors %}
+      <div class="error">{{ address_form.postal_code.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Country -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_country"><i class="fas fa-globe"></i> Country</label>
+      {{ address_form.country }}
+      {% if address_form.country.errors %}
+      <div class="error">{{ address_form.country.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- State and Street Address section -->
+  <div class="form-row">
+    <!-- State -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_state"><i class="fas fa-map"></i> City</label>
+      {{ address_form.city }}
+      {% if address_form.city.errors %}
+      <div class="error">{{ address_form.city.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_state"><i class="fas fa-map"></i> State</label>
+      {{ address_form.state }}
+      {% if address_form.state.errors %}
+      <div class="error">{{ address_form.state.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Street Address -->
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_street_address"><i class="fas fa-home"></i> Street Address</label>
+      {{ address_form.street_address }}
+      {% if address_form.street_address.errors %}
+      <div class="error">{{ address_form.street_address.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Religion section -->
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label class="form-label" for="id_religion"><i class="fas fa-praying-hands"></i> Religion</label>
+      {{ address_form.religion }}
+      {% if address_form.religion.errors %}
+      <div class="error">{{ address_form.religion.errors }}</div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Error Messages -->
+  {% if user_form.errors %}
+  <div class="error">{{ user_form.errors }}</div>
+  {% endif %}
+  {% if account_form.errors %}
+  <div class="error">{{ account_form.errors }}</div>
+  {% endif %}
+  {% if address_form.errors %}
+  <div class="error">{{ address_form.errors }}</div>
+  {% endif %}
+
+  <div id="registerResult"></div>
+
+
+                    <center class="p-3">
+                      <button type="submit" class="btn btn-sm btn-success" id="btn"><i class="fas fa-check"></i> Submit</button>
+                        
+                    </center>
+
+</form>
+                    <center class="p-3">
+                        <a href="{% url 'accounts:login' %}" class="btn btn-sm btn-secondary"><em class="icon ni ni-regen"></em>  Already have an account? Then Login </a>
+                    </center>
+  <div class="card-footer">
+    <button type="button" onclick="window.history.go(-1);" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</button>
+  </div>
+<style>
+.login-section {
+text-align: center;
+margin-top: 20px;
+}
+
+.login-text {
+font-size: 14px;
+color: #555;
+display: block;
+margin-bottom: 5px;
+}
+
+.login-link {
+display: inline-block;
+font-weight: bold;
+color: #000;
+text-decoration: none;
+padding: 8px 16px;
+border-radius: 4px;
+background-color: #f0f0f0;
+transition: background-color 0.2s ease;
+}
+
+.login-link:hover {
+background-color: #ddd;
+}
+@media (max-width: 767px) {
+  /* Personal Details section */
+  .card-body h2 {
+    font-size: 18px;
+  }
+@media (max-width: 767px) {
+  .dropdown-menu.scrollable {
+    height: 200px;
+    overflow-y: scroll;
+  }
+}
+
+}
+
+</style>
+ 
+</div>
+<!-- JavaScript -->
+
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/bundle.js' %}"></script>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/sweetalert.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/toastr.js' %}"></script>
+</body>
+</html>
