@@ -189,11 +189,6 @@ AWS_S3_REGION_NAME = 'eu-north-1'
 AWS_S3_FILE_OVERWRITE=False
 AWS_DEFAULT_ACL=None
 AWS_S3_VERIFY=True
-AWS_S3_OBJECT_PARAMETERS = {
-    "CacheControl": "max-age=604800",
-    "ACL": "public-read",
-}
-AWS_LOCATION = "static"
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
